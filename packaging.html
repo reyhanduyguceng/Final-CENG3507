@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Packaging Management</title>
+  <script src="FactoryInfo.js" defer></script>
+  <script  src="packaging.js" defer></script>
+ 
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <nav>
+        <a href="supplier_management.html">Supplier Management</a>
+        <a href="packaging.html">Product Categorization</a>
+        <a href="sales.html">Sales Management</a>
+        <a href="report_generation.html">Report Generation</a>
+        <a id="factoryMoney"></a>
+        <a id="warehouseKg"></a>
+    </nav>
+    <h1>Blueberry Packaging</h1>
+    <!-- this section for seeing which categories lower then their thresholds -->
+    <section id="restockAlertsSection">
+        <h3>Restock Alerts</h3>
+        <div class = "table-container" >
+        <table id="restockAlertsTable">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Stock Level</th>
+                    <th>Restock Threshold</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table></div>
+        <!-- this section for packaging  -->
+    </section>
+    <div id="packagingForm">
+        <h2>Package Blueberries</h2>
+<div><label for="categorySelect">Select Category:</label>
+        <select id="categorySelect">
+            <option value="1">Small (100g)</option>
+            <option value="2">Medium (250g)</option>
+            <option value="3">Large (500g)</option>
+            <option value="4">Extra Large (1kg)</option>
+            <option value="5">Family Pack (2kg)</option>
+            <option value="6">Bulk Pack (5kg)</option>
+            <option value="7">Premium (Custom weight)</option>
+        </select></div>
+        
+        <div><label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" min="0"></div>
+        
+        <div id="customWeightDiv" style="display: none;">
+            <label for="customWeight">Custom Weight (kg):</label>
+            <input type="number" id="customWeight" min="0">
+        </div>
+        <button id="packageBlueberriesButton">Package Blueberries</button>
+    </div>
+   <!--this area for seeing inventory informations and changing them --> 
+    <h2>Current Inventory</h2>
+    <div class = "table-container">
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Individual Weight</th>
+                <th>Price of Category</th>
+                <th>Stock</th>
+                <th>Minimum Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table></div>
+
+</body>
+</html>

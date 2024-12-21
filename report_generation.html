@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Generation</title>
+  <script src="FactoryInfo.js" defer></script>
+  <script src="ExpenseCalculations.js" defer></script>
+  <script src="RevenueCalculations.js" defer></script>
+  <script src="report_generation.js" defer></script>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <nav>
+        <a href="supplier_management.html">Supplier Management</a>
+        <a href="packaging.html">Product Categorization</a>
+        <a href="sales.html">Sales Management</a>
+        <a href="report_generation.html">Report Generation</a>
+        <a id="factoryMoney"></a>
+        <a id="warehouseKg"></a>
+    </nav>
+    
+ 
+    
+<!-- this area for expense calculations -->
+<h2>Expense Calculation</h2>
+<div>
+    <label for="expenseTimePeriod">Select Time Period:</label>
+    <select id="expenseTimePeriod">
+        <option value="daily">Daily</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+    </select>
+    <button onclick="expenseCalculations.displayExpenses()">Show Total Expenses</button>
+</div>
+
+<div id="totalExpenses">
+</div>
+
+<div id="expenseDetails">
+</div>
+
+<!-- for purchase details of selected farmer -->
+    
+<div id="purchaseDetailsSection" style="display:none;">
+    <h2>Farmer Purchases</h2>
+    <h3>Purchases for <span id="farmerName"></span></h3>
+    <div class = "table-container">
+    <table id="purchaseDetailsTable">
+        <thead>
+            <tr>
+                <th>Purchase ID</th>
+                <th>Date</th>
+                <th>Quantity (kg)</th>
+                <th>Price per Kg</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table></div>
+    <button type="button" onclick="expenseCalculations.closePurchaseDetails()">Close</button>
+</div>
+<!-- this area for revenue informations -->
+<section id="revenueSection">
+        
+    <h2>Revenue Information</h2>
+    <div>
+        <label for="searchCategory">Search by Product Category:</label>
+        <input type="text" id="searchCategory" placeholder="Enter category name" />
+    </div>
+    <label for="revenueTimePeriod">Revenue Time Period:</label>
+    <select id="revenueTimePeriod">
+        <option value="daily">Daily</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+    </select>
+    <div class = "table-container">
+    <table id="revenueTable">
+        <thead>
+            <tr>
+                <th>Product Category</th>
+                <th>Total Sold Quantity</th>
+                <th>Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table></div>
+</section>
+<!-- this area for seeing monthly expenses, revenues, profits, taxes and net profits -->
+<h2>Yearly Report With Months</h2>
+<div id="yearlyDataTable"></div>
+
+
+<!-- this area for seeing trend informations for creating next month plan -->
+<h2>Trend Informations</h2>
+<div class="seasonal-filters">
+    <label for="seasonFilter">Choose Season:</label>
+    <select id="seasonFilter">
+        <option value="default">Default</option>
+        <option value="spring">Spring</option>
+        <option value="summer">Summer</option>
+        <option value="autumn">Autumn</option>
+        <option value="winter">Winter</option>
+    </select>
+</div>
+<div class = "table-container">
+<table id="salesTrendsTable">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Average Sales (Daily)</th>
+            <th>Total Sales (Last Month)</th>
+            <th>Stock Level</th>
+            <th>Predicted Demand (Next Month)</th>
+            <th>Suggested Adjustment (Stock)</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    </tbody>
+</table></div>
+
+</body>
+</html>
