@@ -304,6 +304,8 @@ function updateOrderStatus(orderId, newStatus) {
                 revenue: order.totalCost,
                 saleDate: order.deliveredDate
             });
+            revenueCalculations.updateRevenueTable();
+            revenueCalculations.updateSalesTrendsTable();
         }
     });
     localStorage.setItem('orders', JSON.stringify(orders));

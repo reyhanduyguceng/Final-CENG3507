@@ -173,6 +173,7 @@ document.getElementById('addPurchaseButton').addEventListener('click', () => {
     viewPurchases(farmerId);
     updateFarmerTable(); 
     factoryDisplay.displayFactoryInfo(); 
+    expenseCalculations.displayExpenses(); 
 });
 
 // when we clicked the view button, view table open with inherited table

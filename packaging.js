@@ -12,18 +12,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 // for predefining and creating JSON for inventory
 let inventory = JSON.parse(localStorage.getItem('inventory')) || {
-    1: { name: 'Small (100g)', weight: 0.1, price: 10, stockLevel: 0, restockThreshold: 10 },
-    2: { name: 'Medium (250g)', weight: 0.25, price: 23, stockLevel: 0, restockThreshold: 20 },
-    3: { name: 'Large (500g)', weight: 0.5, price: 44, stockLevel: 0, restockThreshold: 15 },
-    4: { name: 'Extra Large (1kg)', weight: 1, price: 85, stockLevel: 0, restockThreshold: 5 },
-    5: { name: 'Family Pack (2kg)', weight: 2, price: 150, stockLevel: 0, restockThreshold: 10 },
-    6: { name: 'Bulk Pack (5kg)', weight: 5, price: 380, stockLevel: 0, restockThreshold: 5 },
-    7: { name: 'Premium (Custom)', weight: 'custom', price: 0, stockLevel: 0, restockThreshold: 0 } 
+    1: { name: 'Small (100g)', weight: 0.1, price: 10, stockLevel: 0, restockThreshold: 10, restockDate: '1', storageLocation: 'Warehouse A'},
+    2: { name: 'Medium (250g)', weight: 0.25, price: 23, stockLevel: 0, restockThreshold: 20, restockDate: '1', storageLocation: 'Warehouse A' },
+    3: { name: 'Large (500g)', weight: 0.5, price: 44, stockLevel: 0, restockThreshold: 15, restockDate: '1', storageLocation: 'Warehouse A'},
+    4: { name: 'Extra Large (1kg)', weight: 1, price: 85, stockLevel: 0, restockThreshold: 5, restockDate: '1', storageLocation: 'Warehouse A' },
+    5: { name: 'Family Pack (2kg)', weight: 2, price: 150, stockLevel: 0, restockThreshold: 10, restockDate: '1', storageLocation: 'Warehouse A'},
+    6: { name: 'Bulk Pack (5kg)', weight: 5, price: 380, stockLevel: 0, restockThreshold: 5, restockDate: '1', storageLocation: 'Warehouse A'},
+    7: { name: 'Premium (Custom)', weight: 'custom', price: 0, stockLevel: 0, restockThreshold: 0, restockDate: '1', storageLocation: 'Warehouse A'} 
 };
 //for updating category details 
 function updateCategoryDetails(categoryId) {
     const price = parseFloat(document.getElementById(`price-${categoryId}`).value);
     const restockThreshold = parseInt(document.getElementById(`restockThreshold-${categoryId}`).value);
+    const restockDate = document.getElementById(`restockDate-${categoryId}`).value;
+    const storageLocation = document.getElementById(`storageLocation-${categoryId}`).value;
     if (isNaN(price) || price < 0) {
         alert("Please enter a valid price.");
         return;
@@ -34,6 +36,9 @@ function updateCategoryDetails(categoryId) {
     }
     inventory[categoryId].price = price;
     inventory[categoryId].restockThreshold = restockThreshold;
+    inventory[categoryId].restockDate = restockDate; 
+    inventory[categoryId].storageLocation = storageLocation; 
+
     localStorage.setItem('inventory', JSON.stringify(inventory));
 
     updateInventoryTable();
@@ -53,6 +58,7 @@ function checkRestockAlerts() {
                 <td>${category.name}</td>
                 <td>${category.stockLevel}</td>
                 <td>${category.restockThreshold}</td>
+                <td>${category.restockDate}</td>
             `;
             restockAlertsTable.appendChild(row);
         }
@@ -152,15 +158,24 @@ function packageProduct(categoryId, quantity) {
 // for adding or updating premium versions
 function addOrUpdatePremiumVariation(customWeight, quantity) {
     const premiumId = `premium-${customWeight}kg`;
+    const totalWeightNeeded = customWeight * quantity;
+    if (fabrica_management.warehouseKg < totalWeightNeeded) {
+        alert(`Not enough stock in the warehouse to create Premium (${customWeight} kg).`);
+        return; 
+    }
     if (inventory[premiumId]) {
         alert(`Premium (${customWeight} kg) already exists. Updating stock after packaging.`);
-    } else {
+    } 
+    else {
+
         inventory[premiumId] = {
             name: `Premium (${customWeight} kg)`,
             weight: customWeight,
             price: customWeight * 100,  
             stockLevel: 0,  
-            restockThreshold: 1  
+            restockThreshold: 1,  
+            restockDate: 1,
+            storageLocation: 'Warehouse A'
         };
         alert(`Added new Premium (${customWeight} kg)!`);
     }
@@ -185,6 +200,8 @@ function updateInventoryTable() {
             <td><input type="number" id="price-${categoryId}" value="${category.price}" min="0"></td>
             <td><input type="number" id="stock-${categoryId}" value="${category.stockLevel}" disabled></td>
             <td><input type="number" id="restockThreshold-${categoryId}" value="${category.restockThreshold}" min="0"></td>
+            <td><input type="text" id="restockDate-${categoryId}" value="${category.restockDate}"></td>
+            <td><input type="text" id="storageLocation-${categoryId}" value="${category.storageLocation}"></td>
             <td><button onclick="updateCategoryDetails('${categoryId}')">Update</button></td>
         `;
         tbody.appendChild(row);
